@@ -4,3 +4,15 @@ author: "Chen Li"
 date: "`r Sys.Date()`"
 output: githun_document
 ---
+```{r}
+library(tidyverse)
+
+Subway_df = 
+  read.csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
+
+Subway_df = 
+  janitor::clean_names(Subway_df)
+
+Subway_df
+```
+
