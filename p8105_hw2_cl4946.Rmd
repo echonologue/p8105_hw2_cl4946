@@ -22,6 +22,17 @@ Subway_df =
 ```{r}
 Subway_df =
   Subway_df |>
+  select(
+    line,
+    station_name,
+    station_latitude,
+    station_longitude,
+    route1:route11,
+    entry,
+    vending,
+    entrance_type,
+    ada
+  ) |>
   mutate(
     entry = case_match(
       entry,
@@ -30,8 +41,8 @@ Subway_df =
     )
   )
 
-class(Subway_df$entry)
+dim(Subway_df)
 
-select(Subway_df, line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada)
+
 ```
-
+Now this dataset contains subway line and station name, station latitude/ longitude, routes served, entry status, vending availability, entrance type, and ADA. I cleaned the variable names using janitor::clean_names(), selected the variables relevant to this analysis, and converted the entry variable from "YES" and "NO" character values to a logical variable. The resulting dataset has 1868 rows and 19 columns. The data are not fully tidy because route information is spread across route1 to route11 instead of being stored in one variable.
