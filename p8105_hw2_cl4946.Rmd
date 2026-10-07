@@ -1,0 +1,6 @@
+---
+title: "p8105_hw2_cl4946.Rmd"
+author: "Chen Li"
+date: "`r Sys.Date()`"
+output: githun_document
+---
