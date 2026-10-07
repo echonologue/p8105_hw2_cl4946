@@ -4,6 +4,8 @@ author: "Chen Li"
 date: "`r Sys.Date()`"
 output: githun_document
 ---
+
+### To import data and clean names
 ```{r}
 library(tidyverse)
 
@@ -13,6 +15,23 @@ Subway_df =
 Subway_df = 
   janitor::clean_names(Subway_df)
 
-Subway_df
+```
+
+### Then read and clean the data; retain line, station, name, station latitude / longitude, routes served, entry, vending, entrance type, and ADA compliance.
+
+```{r}
+Subway_df =
+  Subway_df |>
+  mutate(
+    entry = case_match(
+      entry,
+      "YES" ~ TRUE,
+      "NO" ~ FALSE
+    )
+  )
+
+class(Subway_df$entry)
+
+select(Subway_df, line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada)
 ```
 
