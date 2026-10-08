@@ -4,7 +4,7 @@ author: "Chen Li"
 date: "`r Sys.Date()`"
 output: githun_document
 ---
-
+#Problem 1
 ### To import data and clean names
 ```{r}
 library(tidyverse)
@@ -46,3 +46,45 @@ dim(Subway_df)
 
 ```
 Now this dataset contains subway line and station name, station latitude/ longitude, routes served, entry status, vending availability, entrance type, and ADA. I cleaned the variable names using janitor::clean_names(), selected the variables relevant to this analysis, and converted the entry variable from "YES" and "NO" character values to a logical variable. The resulting dataset has 1868 rows and 19 columns. The data are not fully tidy because route information is spread across route1 to route11 instead of being stored in one variable.
+
+
+
+```{r}
+###How many distinct stations?
+Subway_df |>
+  distinct(line, station_name) |>
+  nrow()
+
+###How many stations are ADA compliant?
+sum(Subway_df$ada == TRUE)
+
+###What proportion of station entrances / exits without vending allow entrance?
+Subway_df |>
+  filter(vending == "NO") |>
+  summarize(
+    proportion = mean(entry)
+  )
+
+### How many distinct stations serve the A train? and how many are ADA compliant?
+Subway_long =
+  Subway_df |>
+  mutate(
+    across(route1:route11, as.character)
+  ) |>
+  pivot_longer(
+    route1:route11,
+    names_to = "route_number",
+    values_to = "route_name"
+  )
+
+Subway_long |>
+  filter(route_name == "A") |>
+  distinct(line, station_name) |>
+  nrow()
+
+Subway_long |>
+  filter(route_name == "A", ada == TRUE) |>
+  distinct(line, station_name) |>
+  nrow()
+```
+
