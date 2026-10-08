@@ -338,6 +338,8 @@ average_baseline_age
 ```
 
 ```{r}
+### what is the proportion of women 
+
 
 ```
 
