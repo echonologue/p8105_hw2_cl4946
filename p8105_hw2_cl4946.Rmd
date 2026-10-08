@@ -226,3 +226,13 @@ professor_weight =
 
 ### And now we want to solve What was the total number of cigarette butts collected by Gwynnda in June of 2022?
 
+```{r}
+gwy_2022_df = 
+  trash_df |>
+  filter(
+    trash_wheel == "Gwynnda",
+    year == 2022,
+    month == "June"
+  )
+```
+
