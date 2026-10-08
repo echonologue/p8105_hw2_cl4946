@@ -364,3 +364,20 @@ There were `r n_participants` participants in the study, and `r count_developed`
 
 ### Check whether some participants appear in only the baseline or amyloid datasets, and comment on your findings. Combine the demographic and biomarker datasets so that only participants who appear in both datasets are retained, and briefly describe the resulting dataset; export the result as a CSV to your data directory.
 
+```{r}
+amyloid_df =
+  read_csv(
+    "data/data_mci/mci_amyloid.csv",
+    skip = 1,
+    na = c("NA", "Na", "")
+  ) |>
+  janitor::clean_names()
+```
+```{r}
+names(amyloid_df)
+```
+
+```{r}
+dim(amyloid_df)
+```
+
