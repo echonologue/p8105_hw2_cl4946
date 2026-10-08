@@ -298,5 +298,46 @@ mci_baseline_df =
     is.na(age_at_onset) |
       age_at_onset> current_age
   )
+
+dim(mci_baseline_df)
+```
+### How many participants were recruited, and of these how many develop MCI? What is the average baseline age? What proportion of women in the study are APOE4 carriers?
+
+```{r}
+### How many participants were recruited
+n_participants =
+  nrow(mci_baseline_df)
+
+n_participants
+```
+
+```{r}
+### and of these how many develop MCI
+developed_mci_df =
+  mci_baseline_df |>
+  filter(
+    !is.na(age_at_onset)
+  )
+count_developed = 
+  nrow(developed_mci_df)
+
+count_developed
+```
+
+```{r}
+### What is the average baseline age?
+average_baseline_age =
+  mci_baseline_df |>
+  summarize(
+    average_age =
+      mean(current_age, na.rm = TRUE)
+  ) |>
+  pull(average_age)
+
+average_baseline_age
+```
+
+```{r}
+
 ```
 
