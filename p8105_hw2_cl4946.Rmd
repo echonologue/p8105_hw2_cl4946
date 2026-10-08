@@ -341,5 +341,26 @@ average_baseline_age
 ### what is the proportion of women 
 
 
+women_df =
+  mci_baseline_df |>
+  filter(
+    sex == "female"
+  )
+
+women_apoe4_proportion =
+  women_df |>
+  summarize(
+    proportion =
+      mean(apoe4 == "carrier")
+  ) |>
+  pull(proportion)
+
+women_apoe4_proportion
 ```
+There were `r n_participants` participants in the study, and `r count_developed` of them developed MCI during the follow-up period. The average baseline age was `r round(average_baseline_age, 2)` years. Among the women in the study, `r women_apoe4_proportion * 100`% were APOE4 carriers.
+
+
+### Similarly, import, clean, and tidy the dataset of longitudinally observed biomarker values; comment on the steps on the import process and the features of the dataset.
+
+### Check whether some participants appear in only the baseline or amyloid datasets, and comment on your findings. Combine the demographic and biomarker datasets so that only participants who appear in both datasets are retained, and briefly describe the resulting dataset; export the result as a CSV to your data directory.
 
