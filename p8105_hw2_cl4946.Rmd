@@ -89,4 +89,117 @@ Subway_long |>
 ```
 
 # Question 2
-### 
+### specify the sheet in the Excel file and to omit non-data entries (rows with notes / figures; columns containing notes) using arguments in read_excel
+
+```{r}
+trash_df = 
+  readxl::read_excel("./data/202610 Trash Wheel Collection Data.xlsx",
+    sheet = "Mr. Trash Wheel",
+    range = "A2:N549"
+  ) |>
+  janitor::clean_names() |>
+  drop_na(dumpster) |>
+  mutate(
+    sports_balls = as.integer(round(sports_balls))
+  )
+
+
+```
+
+
+### To combine data from from Mr. Trash Wheel, Professor Trash Wheel , and Gwynnda
+
+```{r}
+names(mr_trash_df)
+names(professor_trash_df)
+names(gwynnda_df)
+```
+
+```{r}
+trash_path = "data/202610 Trash Wheel Collection Data.xlsx"
+
+# Mr. Trash Wheel
+mr_trash_df =
+  readxl::read_excel(
+    trash_path,
+    sheet = "Mr. Trash Wheel",
+    range = readxl::cell_limits(
+      c(2, 1),
+      c(NA, 14)
+    ),
+    na = c("", "NA", "dive")
+  ) |>
+  janitor::clean_names() |>
+  tidyr::drop_na(dumpster) |>
+  dplyr::mutate(
+    dumpster = as.integer(dumpster),
+    month = stringr::str_to_title(
+      stringr::str_trim(month)
+    ),
+    year = as.integer(year),
+    sports_balls =
+      as.integer(round(sports_balls)),
+    trash_wheel = "Mr. Trash Wheel"
+  )
+
+
+# Professor Trash Wheel
+professor_trash_df =
+  readxl::read_excel(
+    trash_path,
+    sheet = "Professor Trash Wheel",
+    range = readxl::cell_limits(
+      c(2, 1),
+      c(NA, 13)
+    ),
+    na = c("", "NA", "dive")
+  ) |>
+  janitor::clean_names() |>
+  tidyr::drop_na(dumpster) |>
+  dplyr::mutate(
+    dumpster = as.integer(dumpster),
+    month = stringr::str_to_title(
+      stringr::str_trim(month)
+    ),
+    year = as.integer(year),
+    trash_wheel = "Professor Trash Wheel"
+  )
+
+
+# Gwynnda
+gwynnda_df =
+  readxl::read_excel(
+    trash_path,
+    sheet = "Gwynnda the Good Wheel of the W",
+    range = readxl::cell_limits(
+      c(2, 1),
+      c(NA, 12)
+    ),
+    na = c("", "NA", "dive")
+  ) |>
+  janitor::clean_names() |>
+  tidyr::drop_na(dumpster) |>
+  dplyr::mutate(
+    dumpster = as.integer(dumpster),
+    month = stringr::str_to_title(
+      stringr::str_trim(month)
+    ),
+    year = as.integer(year),
+    trash_wheel = "Gwynnda"
+  )
+
+trash_df =
+  dplyr::bind_rows(
+    mr_trash_df,
+    professor_trash_df,
+    gwynnda_df
+  ) |>
+  dplyr::select(
+    trash_wheel,
+    everything()
+  )
+
+dim(trash_df)
+names(trash_df)
+```
+
