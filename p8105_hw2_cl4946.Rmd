@@ -88,3 +88,5 @@ Subway_long |>
   nrow()
 ```
 
+# Question 2
+### 
