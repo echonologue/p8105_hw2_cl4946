@@ -262,4 +262,27 @@ mci_baseline_df =
   )|>
   janitor::clean_names()
 ```
+```{r}
+names(mci_baseline_df)
+```
+
+```{r}
+head(mci_baseline_df)
+dim(mci_baseline_df)
+```
+```{r}
+mci_baseline_df|>
+  mutate(
+    sex = case_match(
+      sex,
+      0 ~ "female",
+      1 ~ "male"
+    ),
+    apoe4 = case_match(
+      apoe4,
+      0 ~ "non-carrier"
+      1 ~ "carrier"
+    )
+  )
+```
 
