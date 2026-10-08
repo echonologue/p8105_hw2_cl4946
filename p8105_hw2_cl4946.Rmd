@@ -2,7 +2,7 @@
 title: "p8105_hw2_cl4946.Rmd"
 author: "Chen Li"
 date: "`r Sys.Date()`"
-output: githun_document
+output: github_document
 ---
 #Problem 1
 ### To import data and clean names
@@ -56,7 +56,11 @@ Subway_df |>
   nrow()
 
 ###How many stations are ADA compliant?
-sum(Subway_df$ada == TRUE)
+
+Subway_df |>
+  filter(ada == TRUE) |>
+  distinct(line, station_name) |>
+  nrow()
 
 ###What proportion of station entrances / exits without vending allow entrance?
 Subway_df |>
@@ -109,11 +113,7 @@ trash_df =
 
 ### To combine data from from Mr. Trash Wheel, Professor Trash Wheel , and Gwynnda
 
-```{r}
-names(mr_trash_df)
-names(professor_trash_df)
-names(gwynnda_df)
-```
+
 
 ```{r}
 trash_path = "data/202610 Trash Wheel Collection Data.xlsx"
@@ -202,4 +202,13 @@ trash_df =
 dim(trash_df)
 names(trash_df)
 ```
-After cleaning and combining the three Trash Wheel datasets, the resulting dataset contains `r nrow(trash_df)` observations and `r ncol(trash_df)` variables. Key variables include `trash_wheel`, `dumpster`, `month`, `year`, `weight_tons`, `plastic_bottles`, and `cigarette_butts`. Based on the available data, Professor Trash Wheel collected a total of `r round(sum(trash_df$weight_tons[trash_df$trash_wheel == "Professor Trash Wheel"], na.rm = TRUE), 2)` tons of trash. In June 2022, Gwynnda collected a total of `r format(sum(trash_df$cigarette_butts[trash_df$trash_wheel == "Gwynnda" & trash_df$year == 2022 & trash_df$month == "June"], na.rm = TRUE), big.mark = ",", scientific = FALSE)` cigarette butts.
+###To Calculate the weight: 
+
+```{r}
+professor_df =
+  trash_df |>
+  filter(
+    trash_wheel == "Professor Trash Wheel"
+  )
+```
+
