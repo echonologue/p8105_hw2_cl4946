@@ -289,4 +289,14 @@ mci_baseline_df |>
 mci_baseline_df |>
   count(apoe4)
 ```
+```{r}
+### delete data that don't fit to inclusion criteria
+
+mci_baseline_df = 
+  mci_baseline_df |>
+  filter(
+    is.na(age_at_onset) |
+      age_at_onset> current_age
+  )
+```
 
