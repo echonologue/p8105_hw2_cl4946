@@ -280,9 +280,13 @@ mci_baseline_df|>
     ),
     apoe4 = case_match(
       apoe4,
-      0 ~ "non-carrier"
+      0 ~ "non-carrier",
       1 ~ "carrier"
     )
   )
+mci_baseline_df |>
+  count(sex)
+mci_baseline_df |>
+  count(apoe4)
 ```
 
