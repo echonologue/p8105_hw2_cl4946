@@ -210,5 +210,19 @@ professor_df =
   filter(
     trash_wheel == "Professor Trash Wheel"
   )
+
+professor_weight = 
+  professor_df |>
+  summarize(
+    total_weight = sum(
+      weight_tons,
+      na.rm = TRUE)
+  )
+
+professor_weight =
+  professor_weight |>
+  pull(total_weight)
 ```
+
+### And now we want to solve What was the total number of cigarette butts collected by Gwynnda in June of 2022?
 
